@@ -1,0 +1,114 @@
+import random
+import time
+
+nValid = range(1,31)
+playAgainAnswers = ['y','ok','k','yes']
+
+
+def intro():
+
+    print('Hi! Welcome to my silly guess the number game.')
+    print()
+    time.sleep(0.2)
+    print('Whats your name?')
+    print()
+    name = input()
+    print('Well, nice to meet you ' + name + '.')
+    print()
+    return name
+    
+def game():
+
+    guess = ''
+    print('Now, I thinking in a number between 1 and 30.')
+    print()
+    time.sleep(0.2)
+    print('Try to guess it. You have 5 tries!')
+    print()
+    print('Good luck and may the oods ever be in your favor')
+    print()
+    print('START'.center(50,'='))
+    tries = 0        
+
+    while True:
+        print('So.. What is my secret number?')
+
+        try:
+            guess = input()
+            guess = int(guess)
+
+        except:
+            print()
+            print('You didn\'t enter a valid number.')
+            continue
+
+        if guess not in nValid:
+            print()
+            print('Enter a number between 1 and 30')
+            continue
+        if tries == 4 and guess != rightNumber:
+            return (guess, tries) 
+                  
+        elif guess < rightNumber:
+            time.sleep(0.2)
+            print('Your guess was too low!')
+            tries = tries + 1
+            print()
+            print('Tries left: ' + str(5 - tries))
+            print()
+
+        elif guess > rightNumber:
+            time.sleep(0.2)
+            print('Your guess was too high!')
+            tries = tries + 1
+            print()
+            print('Tries left: ' + str(5 - tries))
+            print()
+
+        else:
+            return (guess, tries)
+        
+def checking(guess, tries):
+
+    if  guess == rightNumber and tries == 0:
+        print()
+        time.sleep(0.3)
+        print('Wow!! It seems you only needed one try to guess my number.')
+        print('Well done ' + name + '!')
+        time.sleep(0.3)
+        print('But I dare you to guess it again, Mr. Luckypants.')
+    elif guess == rightNumber:
+        print()
+        time.sleep(0.3)
+        print('Congratz, ' + name + '! You guessed my number in ' + str(tries + 1) + ' tries!')
+        print()
+        time.sleep(0.3)
+        print('But I dare you to try again!')
+
+    else:
+        time.sleep(0.3)   
+        print('Awww, too bad! You spent all your tries!')
+        print()
+        time.sleep(0.3)        
+        print('The number I was thinking was ' + str(rightNumber) + '!')
+        print()
+        time.sleep(0.3)
+        print('Maybe next time, ' + name + '.')
+        print()
+
+playAgain = 'yes'
+while playAgain in playAgainAnswers:
+
+    name = intro()
+    rightNumber = random.randint(1, 30)
+    print('DEBUG: ' + 'rightNumber -> ' + str(rightNumber))
+    guess, tries = game()
+    checking(guess, tries)
+
+    time.sleep(0.5)
+    print('(If you desire to play again just enter \'yes\')')
+    playAgain = input()
+    playAgain = playAgain.lower()
+print('Cya.')
+time.sleep(1)
+
